@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ur"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Qari Hacker Animation</title> 
+  <style>
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Monospace font for typing effect */
+            background-color: #282c34; /* Dark background for better glow effect */
+            color: #ffffff; /* Default white text for better visibility */
+            overflow: hidden;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .line {
+            font-size: 24px;
+            opacity: 0; /* Initial opacity */
+            transition: opacity 0.5s ease; /* Fade effect */
+        }
+        .final-line {
+            font-size: 36px; /* Larger font for the final line */
+            opacity: 1; /* Final opacity */
+            animation: glow 1.5s infinite alternate; /* Glow effect */
+            position: absolute; /* Center positioning */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for center alignment */
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+            50% { text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
+            100% { text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+        }
+    </style> 
+ </head> 
+ <body> 
+  <div id="animationContainer"></div> 
+  <script>
+        const lines = [
+            "import socket",
+            "import os",
+            "import requests",
+            "from bs4 import BeautifulSoup",
+            "def scan_ports(target):",
+            "response = requests.get('http://example.com')",
+            "print('Scanning target: {}'.format(target))",
+            "def exploit_vulnerability(target):"
+        ];
+        const finalLine = "King"; // Line to show after the animation
+        const animationContainer = document.getElementById("animationContainer");
+
+        // Colors for each line
+        const colors = ['#ff5733', '#33ff57', '#ff8c33', '#33a1ff', '#ff5733', '#33ff57', '#ff8c33', '#33a1ff'];
+
+        function typeLine(line, element, color, callback) {
+            let index = 0;
+            element.style.color = color; // Set the color for the line
+
+            const typingInterval = setInterval(() => {
+                if (index < line.length) {
+                    element.textContent += line.charAt(index); // Append one character at a time
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                    setTimeout(callback, 500); // Call the callback after a delay
+                }
+            }, Math.random() * 100 + 50); // Random delay to simulate human typing
+        }
+
+        // Animate each line
+        let delay = 0;
+        lines.forEach((line, index) => {
+            const lineElement = document.createElement("div");
+            lineElement.className = "line"; // Add line class
+            animationContainer.appendChild(lineElement);
+
+            setTimeout(() => {
+                lineElement.style.opacity = 1; // Fade in the line
+                typeLine(line, lineElement, colors[index], () => {
+                    // If it's the last line, show final line after a delay
+                    if (index === lines.length - 1) {
+                        setTimeout(() => {
+                            const finalLineElement = document.createElement("div");
+                            finalLineElement.className = "final-line";
+                            finalLineElement.textContent = finalLine;
+                            animationContainer.appendChild(finalLineElement);
+                        }, 500); // Delay before showing final line
+                    }
+                });
+            }, delay); 
+            delay += 3000; // 3 seconds delay for each line
+        });
+
+        // Hide all lines after a delay
+        setTimeout(() => {
+            const allLines = document.querySelectorAll('.line, .final-line');
+            allLines.forEach(line => {
+                line.style.opacity = 0; // Fade out all lines
+            });
+        }, delay); // Wait for all lines to be typed
+    </script> 
+ </body>
+</html>
